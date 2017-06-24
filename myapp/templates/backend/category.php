@@ -13,11 +13,11 @@ article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block}
     header{text-align:center; font-size:30px;}
     footer{text-align:center;}
     div{height:30px;}
-    div span{ width:33.3333%; line-height:30px;display: inline-block;text-align:center;vertical-align: middle}
+    div span{ width:20%; line-height:30px;display: inline-block;text-align:center;vertical-align: middle}
     button{width:40px;height:20px;}
     button:hover{cursor:pointer}
 </style>
-<script type="text/javascript"><!--
+<script type="text/javascript">
         /*ajax*/
     var xmlhttp
     if(window.XMLHttpRequest)
@@ -183,16 +183,21 @@ article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block}
        
 
 
-    --></script>
+    </script>
 </head>
 <body>
 <?php var_dump($query);?>
 <header>总分类一览表</header>
 <section>
-    <div class='row'><span>分类id</span><span>分类名称</span><span>操作</span></div>
+    <div class='row'>
+    <span>分类id</span>
+    <span>分类名称</span>
+    <span>封面图片路径</span>
+	<span>分类介绍</span>
+    <span>操作</span></div>
     <?php foreach($query as $v): ?>
 
-        <div class='row'><span><?=$v->idcategory;?></span><span><?=$v->name;?></span><span><button type='button' class='del'>删除</button>&nbsp;&nbsp;<button type="button" class='update'>修改</button></span></div>
+        <div class='row'><span><?=$v->idcategory;?></span><span><?=$v->name;?></span><span><?=$v->coverUrl;?></span><span><?=$v->intro;?></span><span><button type='button' class='del'>删除</button>&nbsp;&nbsp;<button type="button" class='update'>修改</button></span></div>
 
     <?php endforeach;?>
 

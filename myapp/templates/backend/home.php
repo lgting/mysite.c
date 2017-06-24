@@ -11,7 +11,6 @@
     <title>首页</title>
   </head>
   <body>
-  <?php var_dump($query); ?>
   
 	<div class="untreated">
 		<p>未处理</p>

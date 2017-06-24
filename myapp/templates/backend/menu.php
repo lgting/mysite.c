@@ -1,4 +1,4 @@
-a<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
   <head>
     <meta charset="utf-8">
@@ -16,7 +16,7 @@ a<!DOCTYPE HTML>
     table#stuRecordTable{width:95%;margin:0 auto;text-align: center;}
     table#stuRecordTable tr{height:35px;}
 </style>
-<script type="text/javascript"><!--
+<script type="text/javascript">
     function $(eleStr){
         switch(eleStr.substr(0,1)){
         case "#":
@@ -273,7 +273,7 @@ a<!DOCTYPE HTML>
         var cs = rs[1].cells; //取到当前行的所有单元格
         //alert(cs[1].innerHTML);
     }
---></script>
+</script>
 <title>菜单增加</title>
 </head>
   <body>
@@ -298,7 +298,7 @@ a<!DOCTYPE HTML>
         </tr> -->
         <?php 
             $res='';
-            foreach($query as $val){
+            foreach($menu as $val){
                 foreach($val as $k=>$cell){
                     if($k=='idmenu'){$res .='<tr><input type="hidden" name="menuid" value="'.$cell.'">';continue;}
                     $res .= '<td>'.$cell.'</td>';

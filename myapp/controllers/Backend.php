@@ -25,9 +25,31 @@ class Backend extends CI_Controller {
 		
 		//单一入口这里面有很多要处理的
 			//解析url ，把参数传到相应的函数
+	/* 	switch ( $this->uri->segment(2,0) )  为什么使用switch后打开登录页面提示重定向次数过多。
+		{
+			case 'logout':
+			    $this->logout();
+			    break;
+			case 'switch_captcha':
+				$this->switch_captcha();
+				exit;
+			case 'judge_login':
+				$this->judge_login();
+				break;
+			case 'captch_name':
+				$this->captcha_name();
+				break;
+			default :
+				$this->load->helper(array('form', 'url'));
+				$this->load->library('form_validation');
+				$this->to_login();
+			
+		}  */
+		
 		if($this->uri->segment(2,0) === 'logout')
 		{
 			$this->logout();
+			return;
 		}
 		if($this->uri->segment(2,0) === 'switch_captcha')
 		{
@@ -42,14 +64,15 @@ class Backend extends CI_Controller {
 		if($this->uri->segment(2,0) === 'captcha_name')
 		{
 			$this->captcha_name();
-		}
+		} 
+	
         //operate category
         if($this->uri->segment(3,0) === 'category' && password_verify('fuckyou',$this->session->login))
         {
             $data = $this->input->post();
             $this->operate_category($data);
             return;   
-        }
+        } 
 		
 //operate menu category
 	 	if($this->uri->segment(3,0) === 'menu_category' && password_verify('fuckyou',$this->session->login))
@@ -70,7 +93,7 @@ class Backend extends CI_Controller {
 		if($this->uri->segment(3,0) === 'view'&&password_verify('fuckyou',$this->session->login))
 		{
 //数据的处理加载交给模型处理
-			$query = $this->backend_model->view_data($this->uri->segment(4));
+			$query = $this->backend_model->backend_data($this->uri->segment(4));
 
 			//模板路径设置规则：index/view/filename   分别为入口方法|视图|模板文件名
 			//处理视图发来的请求的请求

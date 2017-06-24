@@ -23,40 +23,94 @@ class Backend_model extends CI_Model
 	
 	//前台主页数据，显示每个分类最新的四条动态
 	//构建一个动态数组，根据相应的页面加载相应的数据
-	public function frontend( $arg=null )
+	public function frontend( $arg=null,$menuid=null )
 	{
 		
+		//判断参数，加载相应的数据
+		switch( $arg )
+		{
+			//返回分类数据
+			case 'c_article':
+				$sql = "select * from category";
+				$category = $this->db->query($sql)->result();
+				$data[ 'category' ] = $category;
+				return $data;
+			case 'home1'://加载主页的数据
+				$menu = $this->query_menu();
+				$data[ 'menu' ] =  $menu;
+				$data['content'] = $this->query_contents( 41 );
+				return $data;
+				
+		}
+	
+	
 		
-		
-		
-		
-		
-		
-		if($arg == 'menu_category')
+		if( $arg == 'menu_category' )
 		{
 			//要返回的数据有 菜单列表 还有  分类列表
-			$data['menu'] = $this->query_menu()['query'];
+			$data['menu'] = $pthis->query_menu()['query'];
 			$data['category'] = $this->query_category()['category'];
 			$data['menu_category'] = $this->query_menu_category();
 			return $data;
 		}else{
 			return $this->query_menu();
 		}
-		return $data;
+		//return $data;
+	}
+	public function backend_data( $arg ){
+		switch( $arg )
+		{
+			case 'menu':
+			$data['menu'] = $this->query_menu();
+			return $data;
+				
+		}
 	}
 	
 	public function query_menu()
 	{
 		//菜单表根据order_id排序ascend descend
 		$menu = $this->db->query("select * from menu order by order_id asc");
-		$menu = $menu->result();
-		//取出菜单的id，根据id查询分类id，根据分类id读取读每个分类下的内容，从而加载页面数据，
-		$menu
-		var_dump($menu);
-		exit;
-		 $data = ['menu'=>$menu];//添加下标是方便在模板中使用
-		 return $data;
+		return $menu->result();		
 	}
+		
+	//根据分类ID查出所有文章
+	
+	//根据菜单内容取出 内容
+	public function query_contents( $menu_id ){
+			//查询分类  
+			$sql = "select category_id from menu_category where menu_id=$menu_id";
+			$category_id = $this->db->query($sql);
+			if($category_id)
+			{
+				$category_id = $category_id->result();
+				foreach($category_id as $k=>$v)
+				{
+					//content 存放页面内容
+				/* 	$category['name'] = $v->name;
+					$category['intro'] = $v->intro;
+					//调用query_article 查出文章 */
+					$categoryid = $v->category_id;
+					$category['article'] = $this->query_article( $categoryid );
+					//根据分类ID查出文章的信息
+					$content[] = $category;
+					$category = array();
+				}
+			}
+			
+			return $content;
+	}
+	public function query_article( $category_id){
+		//规定参数位数组
+		$sql = "select * from article where article_category=$category_id";
+			$article = $this->db->query( $sql );
+			if( $article )
+			{
+				return $article->result();
+			}
+	
+	}
+	
 	public function query_category()
 	{
 		$sql = "select * from category";
@@ -233,11 +287,6 @@ echo $sql;
 					}
 		}
 	
-	}
-
-	public function query_article()
-	{
-		
 	}
 	
 	public function validate()

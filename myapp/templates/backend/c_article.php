@@ -2,6 +2,9 @@
 	$htmlData = '';
 	
 ?>
+<?php 
+var_dump($category);
+?>
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -13,7 +16,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrom=1">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<!-- kindedit引入-->
-		<link rel="stylesheet" href="/common/backend/kindedit//themes/default/default.css" />
+	<link rel="stylesheet" href="/common/backend/kindedit//themes/default/default.css" />
 	<link rel="stylesheet" href="/common/backend/kindedit//plugins/code/prettify.css" />
 	<script charset="utf-8" src="/common/backend/kindedit//kindeditor.js"></script>
 	<script charset="utf-8" src="/common/backend/kindedit//lang/zh_CN.js"></script>
@@ -50,11 +53,18 @@
 		sketch:<textarea style="width:700px;height:30px;" name="sketch"></textarea>
 		<textarea name="content1" id="content1" style="width:800px;height:420px;visibility:hidden;"></textarea>
 		<br />
+		
+		
+		<!-- 文章分类 -->
 		<select name="category" id="category">
 			<option disabled selected value>请选择</option>
-		    <option>study</option>
-		    <option>learn</option>
-		    <option>music</option>
+			<?php 
+				foreach($category as $v)
+				{
+					echo "<option value='".$v->idcategory."'>{$v->name}</option>";
+				}
+						
+			?>
 		</select>
 		<input type="submit" id="submit" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)
 	</form>
@@ -86,6 +96,8 @@
 						return false;
 						}
 				}
+			
+			
 		}
   </script>
 </html>
